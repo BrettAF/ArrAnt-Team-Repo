@@ -36,10 +36,22 @@
 
  function [x,fval] = radar_optimization(styles, min_T_styles, min_R_styles, min_quantity, max_quantity,min_diameter, max_diameter, min_power, max_power,year,include_monostatic,k,nu,maximum_elements)
 
-    paramaters = 4; % currently four parameters: type, quantity, diameter, and power
-    nvars = paramaters*styles; % number of variables used for the matrix x
+    num_paramaters = 4; % currently four parameters: type, quantity, diameter, and power
+    nvars = num_paramaters*styles; % number of variables used for the matrix x
     % options for gamultiobj
-    options = optimoptions('gamultiobj', 'PopulationSize', 150, 'MaxGenerations', 150, 'PlotFcn',@gaplotpareto);
+    options = optimoptions('gamultiobj', 'PopulationSize', 150, 'MaxGenerations', 150);
+
+    %speed of light = wavelength*frequency
+    c0  = 299792458; %m/s
+    %speed of light in a vacuum, which decreases based on the density
+    %of the medium
+    nuHz = nu*10^9; 
+    %the livescript has an input of Gigahertz, so iGHz = 10^9 Hz
+    lambda = c0/nuHz;
+    %calculating the wavelength in meters to be used in the loop gain
+    %function
+
+    
     
     % A matrix is used to ensure that the maximum_elements is not exceeded
     A = [];
@@ -60,7 +72,7 @@
     
     
     % calls bounding function to set lower and upper bounds of each parameter
-    [lb,ub] = bounding(paramaters,styles,min_diameter,max_diameter,min_power,max_power,min_quantity,max_quantity,min_T_styles,min_R_styles);
+    [lb,ub] = bounding(num_paramaters,styles,min_diameter,max_diameter,min_power,max_power,min_quantity,max_quantity,min_T_styles,min_R_styles);
     
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     % gamultiobj is a built in function in Matlab that uses a genetic algorithm
@@ -80,16 +92,6 @@
         % nested function that calls the objective functions to calculate cost
         % and gain. 
         % needed by gamultiobj
-
-        %speed of light = wavelength*frequency
-        c0  = 299792458; %m/s
-        %speed of light in a vacuum, which decreases based on the density
-        %of the medium
-        nuHz = nu*10^9; 
-        %the livescript has an input of Gigahertz, so iGHz = 10^9 Hz
-        lambda = c0/nuHz;
-        %calculating the wavelength in meters to be used in the loop gain
-        %function
 
         function f = objectives(x)
             [f(1),f(2)] = objectiveFunction(x,year,styles,k,lambda); % cost and gain
