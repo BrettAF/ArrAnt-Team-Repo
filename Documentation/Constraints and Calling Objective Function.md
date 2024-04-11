@@ -17,19 +17,19 @@ For each style in both vectors, the indices pertaining to quantity, diameter, an
 Type represents whether a style is a transmitter, a receiver, or a monostatic. To learn more about styles see the Styles and Types documentation. How types are added to the vectors depends on whether include monostatic is true. if it is, the program will proceed with the following logic:
 * Transmitters: 0 < t < 1
 * Monostatic:   1 < t < 2
-* Receivers:    2 < t < 3
+* Receivers:    2 < t < 3  
 if allow_monostatic = "F" then the type follows the following rules
 * Transmitters: 0 < t < 1.5
-* Receivers:    1.5 < t < 3
-In order to give the user control over the sort of outputs the program will generate, minimum transmitter styles and minimum receiver styles were added. Minumum transmitters styles are controlled on the upper bound vector starting from the left and going to the right.
+* Receivers:    1.5 < t < 3  
+In order to give the user control over the sort of outputs the program will generate, minimum transmitter styles and minimum receiver styles were added. Minumum transmitters styles are controlled on the upper bound vector starting from the left and going to the right.  
 > For Example:
 > If the parameters are set such that solutions have three styles, and two of those styles must be transmitters,
-> The first (leftmost) two styles in each solution will be transmitters. monostatic antennas are considered transmitters and receivers, so they may also appear here.    
-Receivers are controlled on the lower bound vector. They start at the right side of the vector and work left.
+> The first (leftmost) two styles in each solution will be transmitters. monostatic antennas are considered transmitters and receivers, so they may also appear here.      
+Receivers are controlled on the lower bound vector. They start at the right side of the vector and work left.  
 > For example:
 > If the parameters are set such that solutions have three styles, and two of those styles must be receivers.
 > The last (rightmost ) two styles will be receivers.  
-If The array is set such that these overlap then the overlapping styles will result in monostatic antennas.
+If The array is set such that these overlap then the overlapping styles will result in monostatic antennas.  
 > For Example:
 > If the parameters are set such that solutions have three styles, two of those styles must be transmitters and two of those styles must be receivers.
 > Then the central style of the three is constrained to be both a transmitter and a receiver. This will force it to be monostatic if that option is available.  
