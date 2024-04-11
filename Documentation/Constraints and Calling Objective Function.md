@@ -10,9 +10,11 @@ Minimum quantity, maximum quantity, minimum diameter, maximum diameter minimum p
 lb: the upper bound vector contains all of the maximum values the array solutions are allowed to contain. 
 ub: the lower bound vector contains all of the minimum values the radar array solutions are allowed to have.  
 These two vectors are the length of the four parameters times the number of styles.
-> For example:
-> if a radar array had 3 styles, lb would be a vector 12 indices long, as would ub
-
+> For example:  
+> if a radar array had 3 styles, lb would be a vector 12 indices long, as would ub.  
+For each style in both vectors, the indices pertaining to quantity, diameter, and power will be the same.
+Type represents weather a style is a transmitter, a receiver, or a monostatic. To learn more about styles see the Styles and Types documentation.
+ 
 ## The A Matrix for Maximum Arrays
 ## The Objective Function
 The loop gain function and the cost function expect to receive parameters in the form of vectors. They each receive the following vectors:
