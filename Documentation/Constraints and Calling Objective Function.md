@@ -35,20 +35,27 @@ In order to give the user control over the sort of outputs the program will gene
 > If the parameters are set such that solutions have three styles, and two of those styles must be transmitters,
 > The first (leftmost) two styles in each solution will be transmitters. monostatic antennas are considered transmitters and receivers, so they may also appear here.
 <br>         
+
 Receivers are controlled on the lower bound vector. They start at the right side of the vector and work left.
 <br>
+
 > For example:
 > If the parameters are set such that solutions have three styles, and two of those styles must be receivers.
 > The last (rightmost ) two styles will be receivers.
-<br> 
+<br>
+
 If The array is set such that these overlap then the overlapping styles will result in monostatic antennas.
 <br>   
+
 > For Example:
 > If the parameters are set such that solutions have three styles, two of those styles must be transmitters and two of those styles must be receivers.
 > Then the central style of the three is constrained to be both a transmitter and a receiver. This will force it to be monostatic if that option is available.
-<br>  
+<br>
+  
 If a style is forced to be a transmitter and a receiver, but monostatic arrays are not allowed, the program will default to producing receivers.
 
+## The A Matrix
+The parameter maximum total antennas is passed from the Main live script. This parameter is the only one that is global to the entire array solution, and not just one style of the solution. The bounding function does not handle this parameter, it is instead dealt with in the A matrix. The A matrix simply places the constraint that the sum of the quantity of antennas in each of the styles must be less than the maximum. to learn more about constrained optimization see [Constrained Optimization with Linear Algebra](https://medium.com/@nayla.khaleel202/constrained-optimization-and-linear-algebra-7ba3d5ee0643). 
 ## The Objective Function
 The loop gain function and the cost function expect to receive parameters in the form of vectors. They each receive the following vectors:
 * transmitters
