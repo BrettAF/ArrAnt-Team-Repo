@@ -30,9 +30,10 @@ if allow_monostatic = "F" then the type follows the following rules
 * Receivers:    1.5 < t < 3  
 <br>
 
-In order to give the user control over the sort of outputs the program will generate, minimum transmitter styles and minimum receiver styles were added. Minumum transmitters styles are controlled on the upper bound vector starting from the left and going to the right.  
+In order to give the user control over the sort of outputs the program will generate, minimum transmitter styles and minimum receiver styles were added. Minimum transmitter styles are controlled on the upper bound vector starting from the left and going to the right.  
 > For Example:
-> If the parameters are set such that solutions have three styles, and two of those styles must be transmitters,
+> If the parameters are set such that solutions have three styles, and two of those styles must be transmitters.
+> The upper bound vector will be set in the first two indices that control type to force the desired type.
 > The first (leftmost) two styles in each solution will be transmitters. monostatic antennas are considered transmitters and receivers, so they may also appear here.
 <br>         
 
