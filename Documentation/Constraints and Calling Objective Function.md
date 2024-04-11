@@ -59,6 +59,11 @@ If a style is forced to be a transmitter and a receiver, but monostatic arrays a
 The parameter maximum total antennas is passed from the Main live script. This parameter is the only one that is global to the entire array solution, and not just one style of the solution. The bounding function does not handle this parameter, it is instead dealt with in the A matrix. The A matrix simply places the constraint that the sum of the quantity of antennas in each of the styles must be less than the maximum. to learn more about constrained optimization see [Constrained Optimization with Linear Algebra](https://medium.com/@nayla.khaleel202/constrained-optimization-and-linear-algebra-7ba3d5ee0643). 
 ## The Objective Function
 The loop gain function and the cost function expect to receive parameters in the form of vectors. They each receive the following vectors:
-* transmitters
-* 
-*
+* transmitters: a boolean vector that has 1 for every style that is a transmitter including monostatic antennas.
+* Receivers: a boolean vector that has 1 for every style that is a receiver including monostatic antennas.
+* Powers: A boolean vector that has the power of each style. The power of receiver antennas is made to be 0 in this vector with the following code.
+```Matlab
+powers = powers.*transmitters;
+```
+
+
