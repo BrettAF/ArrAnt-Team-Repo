@@ -5,7 +5,7 @@ The bounding function constrains the minimum and maximum for the four parameters
 * Type
 * Quantity
 * Diameter
-* Power
+* Power  
 Minimum quantity, maximum quantity, minimum diameter, maximum diameter minimum power, and maximum power are received as arguments to the function. They were originally entered on the main live script. They are used to create the upper and lower bounds for the population created in the genetic algorithm. Type is not entered on the main live script, but includes monostatic, minimum receiver styles, and minimum transmitter styles are. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type. 
 lb: the upper bound vector contains all of the maximum values the array solutions are allowed to contain. 
 ub: the lower bound vector contains all of the minimum values the radar array solutions are allowed to have.  
