@@ -1,7 +1,7 @@
-function loop_gain = loop_gain_function(number, diameters, power,receivers, transmitters, k,lambda)
+function loop_gain = loop_gain_function(quantity,diameters,power,receivers,transmitters,k,lambda)
     % This function calculates loop gain.
     %
-    % number: a vector of the quantity of each type of antenna
+    % quantity: a vector of the quantity of each type of antenna
     % diameters: a vector of the diameters of each type of antenna
     % power: Transmitter power recieved as a vector
     % recievers: a boolean vector with 1 for a reciever and 0 for a
@@ -13,11 +13,11 @@ function loop_gain = loop_gain_function(number, diameters, power,receivers, tran
     
     % num_transmitters: A vector of the number of transmitters with 0 for
     %   the recievers
-    num_transmitters = number.*transmitters;
+    num_transmitters = quantity.*transmitters;
     
     % num_recievers: A vector of the number of recievers in each style with
     %   0 for transmitters
-    num_recievers = number.*receivers;
+    num_recievers = quantity.*receivers;
     
     % power_transmitters: Transmitter power recieved as a vector with 0 for
     %   recievers
@@ -59,8 +59,8 @@ function loop_gain = loop_gain_function(number, diameters, power,receivers, tran
         
         array_gain_t = num_transmitters.^2.*power.*G_t;
         %correct form
-        total_gain=sum(array_gain_t);
-        EIRP_A_dB = 10 * log10(total_gain);
+        total_gain_t=sum(array_gain_t);
+        EIRP_A_dB = 10 * log10(total_gain_t);
     end
 
     function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) %MGr
@@ -75,8 +75,8 @@ function loop_gain = loop_gain_function(number, diameters, power,receivers, tran
        
         % returns the gain of all of the antennas of each style of the array
         array_gain_r = num_recievers .* G_r;
-        total_gain=sum(array_gain_r);
-        reciever_gain_dB = 10 * log10(total_gain);
+        total_gain_r=sum(array_gain_r);
+        reciever_gain_dB = 10 * log10(total_gain_r);
     end
 
 end
