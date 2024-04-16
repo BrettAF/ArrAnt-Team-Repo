@@ -61,6 +61,7 @@ receiverC = quantity.*receivers*cost_receiver; %$
 ```
 ### Transmitters
 The transmitter function calculates the cost for the transmitters based on the quantity of transmitting antenna and the power of each transmitter. The equation to estimate the transmitter cost was curve fitted using previous data, shown below.
+
 ![image](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/20594ab9-817f-4358-9060-44368f145b98)
 
 The data was used to create a linear curve fit, which had a R = 0.9934. The numerical values within the equation below are the result of the linear curve fit. The linear equation is a funciton of power, calculating the cost per transmitter using the power vector, then multiplying that resultant vector by the quantity and the transmitters to calculate the total cost of the transmitters, transmitterC, with each index being a style. The power is input as Watts, but the linear curve fit is in units of kW, so to prevent error the power vector is divided by 1000 to convert from Watts to kW. Dot multiplication is used to ensure individual styles are not mixed. The transmitters vector is a logical vector indicating the antenna is either a transmitter or reciever so that the receivers are not included into the transmitters cost.
@@ -71,6 +72,7 @@ transmitterC = quantity.*transmitters.*(0.0227*(power/1000)+1.1523)*1E6; %$
 ```
 ### Concrete
 The concrete function calculates the cost for the concrete pad based on the quantity and diameter of the antennae. The equation to estimate the concrete cost was curve fitted using data from previous projects, shown below.
+
 ![image](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/2acafbeb-ae3e-436a-b44c-76ca6a820e91)
 
 The data was used to create a quadratic curve fit. A linear curve fit had an R = 0.9913 while a quadratic curve fit had an R = 0.9983. This is likely due to additional rebar and gradual pour required for thicker pads. The numerical values within the equation below are the result of the quadratic curve fit. The quadratic equation is a function of antenna diameter, calculating the cost per antenna pad using the diameter vector, then multiplying that resultant vector by the quantity vector. The concrete vector is a vector containing the total cost, in US dollars, for the concrete antenna pads, with each index representing a style. The Dot multiplication is used to ensure individual styles are not mixed.
