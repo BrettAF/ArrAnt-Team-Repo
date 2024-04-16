@@ -59,56 +59,44 @@ The receiver cost is a simple calculation. The cost is calculated by multiplying
 ```
 receiverC = quantity.*receivers*cost_receiver; %$
 ```
-    
-    % the below Cost per Component equations were determined using data and
-    % curvefits, DO NOT change numerical values without reason as these are the
-    % results of the curvefits
 ### Transmitters
-The transmitter function calculates the cost for the transmitters based on the quantity of transmitting antenna dn the power of each transmitter. The equation to estimate the transmitter cost was curve fitted using previous data, shown below.
+The transmitter function calculates the cost for the transmitters based on the quantity of transmitting antenna and the power of each transmitter. The equation to estimate the transmitter cost was curve fitted using previous data, shown below.
 ![image](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/20594ab9-817f-4358-9060-44368f145b98)
 
-The data was used to create a linear curve fit, which had a R = 0.9934. The numerical values within the equation below are the result of the linear curve fit. The linear equation is a funciton of power, calculating the cost per transmitter using the power vector, then multiplying that resultant vector by the quantity and the transmitters to calculate the total cost of the transmitters. The power is input as Watts, but the linear curve fit is in units of kW, so to prevent error the power vector is divided by 1000 to convert from Watts to kW. Dot multiplication is used to ensure individual styles are not mixed. The transmitters vector is a logical vector indicating the antenna is either a transmitter or reciever so that the receivers are not included into the transmitters cost
+The data was used to create a linear curve fit, which had a R = 0.9934. The numerical values within the equation below are the result of the linear curve fit. The linear equation is a funciton of power, calculating the cost per transmitter using the power vector, then multiplying that resultant vector by the quantity and the transmitters to calculate the total cost of the transmitters, transmitterC, with each index being a style. The power is input as Watts, but the linear curve fit is in units of kW, so to prevent error the power vector is divided by 1000 to convert from Watts to kW. Dot multiplication is used to ensure individual styles are not mixed. The transmitters vector is a logical vector indicating the antenna is either a transmitter or reciever so that the receivers are not included into the transmitters cost.
+
+If additional data is provided this equation, particularly the portion (0.0227*(power/1000)+1.1523)*1E6, can be simply changed or updated based on the optimimal fit so long as power remains the independant variable.
 ```    
 transmitterC = quantity.*transmitters.*(0.0227*(power/1000)+1.1523)*1E6; %$
 ```
 ### Concrete
-
+The concrete function calculates the cost for the concrete pad based on the quantity and diameter of the antennae. The equation to estimate the concrete cost was curve fitted using data from previous projects, shown below.
 ![image](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/2acafbeb-ae3e-436a-b44c-76ca6a820e91)
 
+The data was used to create a quadratic curve fit. A linear curve fit had an R = 0.9913 while a quadratic curve fit had an R = 0.9983. This is likely due to additional rebar and gradual pour required for thicker pads. The numerical values within the equation below are the result of the quadratic curve fit. The quadratic equation is a function of antenna diameter, calculating the cost per antenna pad using the diameter vector, then multiplying that resultant vector by the quantity vector. The concrete vector is a vector containing the total cost, in US dollars, for the concrete antenna pads, with each index representing a style. The Dot multiplication is used to ensure individual styles are not mixed.
 
+If additional data is provided this equation, particularly the portion (1E4*(0.0706* diameters.^2+2.2827*diameters-4.4419)), can be simply changed or updated based on the optimimal fit so long as diameters remains the independant variable.
 ``` 
 concrete = quantity.*(1E4*(0.0706*diameters.^2+2.2827*diameters-4.4419)); %$
-    %coefficient values were determined from data provided by NG using a
-    %quadratic fit instead of a linear fit, as the quadratic better fit the 
-    %provided data as well as the general trend
-    %Concrete is a vector with each index being the cost for the style of the 
-    %same index
 ```
 ### Antenna
+The antenna function calculates the cost for the antennae themselves based on the quantity and diameter of the antennae. The equation to estimate the antenna cost was curve fitted using data from previous projects, shown below.
 
+![image](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/1346489e-5654-490c-8380-0a04a4f52acb)
+
+The data provided was used to create a exponential curve fit. The equation was initially calculated by members of Northrop Grumman, but the equation was verified to be the most accurate equation in comparison to quadratic, quartic, and Fourier series fit, among others. The numerical values within the equation below are the result of the exponential curve fit. The equation calculated the cost of an individual antenna using the diameters vector, with the resultant vector being multiplied by the quantity vector. The antenna vector is the total antenna cost, in US dollars, with each index representing a style. Dot multiplication is used to ensure individual styles are not mixed.
+
+If additional data is provided this equation, particularly the portion (254283*exp(diameters.*0.1555)), can be simply changed or updated based on the optimimal fit so long as diameters remains the independant variable.
 ```
-    antenna = quantity.*(254283*exp(diameters.*0.1555)); %$
-    %Estimated antenna cost function determined by NG, determined using an
-    %exponential fit to NG data
-    %Antenna is a vector with each index being the cost for the style of the 
-    %same index
+antenna = quantity.*(254283*exp(diameters.*0.1555)); %$
 ```
 ## Total Cost
-
+Once the cost of all major components have been calculated the total cost is simply the summation of the calculated component vectors as well as the calculated trenching scalar and the miscellaneous cost parameter. The sum of each vector is individually calculated first to ensure that no value is accidentally added multiple times. Summation for component cost is calculated here, not after each of the above equations for multiple reasons. When analyzing and calculating the cost of the arrays, individual styles are kept together as as the same index in the antenna, transmitterC, concrete, and receiverC vectors. This allows individual component costs based on diameter, power, and quantity to be kept with their same styles, allowing error calculation as well as modification to individual styles to see how the cost changes. AFter the sum of each vector is calculated the scalar trenching and mis_costs are added to result in the variable cost, inn US dollars.
+Once the cost is calculated interest is applied. All the models used data from 2023, so to apply to future building projects the cost is adjusted. Interest is calculated using the compound interest formula. The total_cost is the total project cost for the antenna arrays in US dollars for the year in which the project is built.
 ```
-    Total Cost
-    cost = sum(antenna)+sum(transmitterC)+sum(concrete)+sum(receiverC)+trenching+misc_costs;
-    % the total cost for the both the transmitting and receiving antenna
-    % arrays, calculated by first summing up all the calculated vectors then
-    % adding the trenching cost and miscellaneous cost since Trenching and
-    % Misc_costs are both scalar values
-    %if Trenching and Misc_costs are added before summing each component cost
-    %it will result in error
-    
-    total_cost = cost*(1+interest/100)^(yearBuilt-2023);
-    %total_cost is the cost of the total antenna array accounting for compound
-    %interest/inflation, the interest variable can be changed to account for
-    %bidding prices and escalation, this will calculate the estimated cost in
-    %the the year of building
+cost = sum(antenna)+sum(transmitterC)+sum(concrete)+sum(receiverC)+trenching+misc_costs;
+
+total_cost = cost*(1+interest/100)^(yearBuilt-2023);
+
 end 
 ```
