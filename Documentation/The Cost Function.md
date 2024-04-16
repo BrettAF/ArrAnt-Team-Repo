@@ -7,7 +7,13 @@ The function combines paremetric and analogous cost estimation techniques to est
 ## Calling the Function
 While the function is designed to be unobtrusive, never being called on in the main live script, it is a working function called on by radar_optimization.m and can be called by other scripts or by the command window. 
 
-The inputs to the cost function are vectors and scalars. Quantity is a vector input with each index indicating the number of antennae for a unique style. Diameters is another input vector with each index indicating the antenna diameter in meters, with each index having the same style as quantity. Power is a vector input with every index indicating each individual antenna's transmitting power in Watts, with each index having the same style as quantity and diameter. Receivers and transmitters are both logical input vectors. Every index has the same styles as quantity, diameter, and power, with values indicating the antenna type, with a 1 being true. For examples and distinction of style vs type, please see the Styles and Type documentation. The variable yearBuilt is a scalar value indicating the expected construction date of the antenna array, which is then used to apply escalation. The cost function output is a scalar quantity in US dollars.
+The inputs to the cost function are vectors and scalars. 
+* Quantity: vector input with each index indicating the number of antennae for a unique style
+* Diameters: vector input with each index indicating the antenna diameter in meters, with each index having the same style as quantity
+* Power: vector input with every index indicating each individual antenna's transmitting power in Watts, with each index having the same style as quantity and diameter
+* Receivers and transmitters: logical input vectors, with every index has the same styles as quantity, diameter, and power. Values indicat the antenna type, with a 1 being true.
+* yearBuilt: scalar value indicating the expected construction date of the antenna array, which is then used to apply escalation
+For examples and distinction of style vs type, please see the Styles and Type documentation. The cost function output is a scalar quantity in US dollars.
 
 The cost function is called as:
 ```
@@ -16,46 +22,30 @@ function [total_cost] = cost_function(quantity,diameters,power,receivers,transmi
 %The cost_function outputs the total cost to build antenna arrays based
 %on the number, diameter, and power. This cost includes both the
 %transmitting and receiving arrays
-
-%Inputs: quantity = number of antennas for a particular diameter as a vector
-%diameters = Antenna Diameters for each style, as a vector
-%power = Power of the antenna in Watts for each style, in vector form
-%receiver = logical vector of indicating which antenna styles are recievers
-%           (0 for transmitting arrays)
-%transmitter = logical vector of indicating which antenna styles are 
-%           transmitters (1 for transmitting arrays)
-%yearBuilt = Year of building to account for inflation, a double
-
-%Outputs: Total_Cost = Estimated cost for a particular array based on the 
 ```
 
-## Changable and 
+## Changable Parameters
+The cost function was designed to have no hard coded parameters. Part of this design is the changable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters to a values to a more suitable value, these changable parameters are based on estimated values. These parameters are:
+* cost_receiver: the individual cost, in US dollars, for each soild state receiver, with each receiver antenna having one receiver
+* trenching_per_m3: the estimated cost, in US dollars, to install a cubic meter of trenching. This value should be adjusted based on the intended terrain and required excavation tools
+* depth: the depth of the trenching in inches. This value should be adjusted based on the codes and standards particular to the area the antenna arrays will be built
+* width: the width of the trenching in inches. This value should be based on code, standards, and safety requirements
+* spacing_by_diameter: this value is used to estimate the distance between antennas. The equation used is [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) where r is the radial distance of the antenna from the center of the array and A is a chosen constant. Data from the design of the [VLA](https://ieeexplore.ieee.org/document/1457033) was used in conjunction with the previously defined equation to solve for an estimated value of A, the spacing_by_diameter. This value should be changed based on the intended size of the antenna array
+* trenching_scale: a unitless value indicating the length and difficulty required to complete the trenching of the tertain and should also be changed based on the soil and rock located at the intended build site
+* misc_costs: miscellaneous costs, in US dollars, required to build the antenna, such as permits. At the current moment there is no estimated micellaneous cost resulting in a value of 0, so the value should be adjusted as necessary
+* interest: the inflation or escalation of monetary value from year to year. The initial rate is a modest 1.5% and should be adjusted based on current or expected rates
 ```
-Changable parameters
-    %the below variables can be changed without impacting the function's
-    %performance
-    
-    cost_receiver = 400000; %$
-    %this is the cost ($) per reciever for each antenna as estimated by NG
-    trenching_per_m3 = 50; %$
-    %estimated cost of trenching installation per m^3
-    depth = 44; %in
-    %trenching depth, insert as inches as it is later converted to meters
-    width = 24; %in
-    %trenching width, insert as inches as it is later converted to meters
-    spacing_by_diameter=0.000082;
-    %n^1.6 = A*r where r is radial position and A is some chosen constant
-    %VLA maximum of 21km has a A of approximately 2.066 1/km ~> A = 0.000082 for
-    %25m dishes
-    trenching_scale = 1;
-    %the trenching scale is a unitless value indicating how long and arduous
-    %excavations will be based on the soil type and rock hardness/size
-    misc_costs = 0; %$
-    %in the future you may wish to add miscellaneous known costs not included
-    %within the provided equations
-    interest = 1.5; % %interest, or %inflation
-    %the expected interest or increase in cost per year after 2023
-    
+cost_receiver = 400000; %$
+trenching_per_m3 = 50; %$
+depth = 44; %in
+width = 24; %in
+spacing_by_diameter=0.000082;
+trenching_scale = 1;
+misc_costs = 0; %$
+interest = 1.5; % %interest, or %inflation
+```
+## Cost per Component
+```  
     %% Cost per Component
     
     depth = depth*0.0254;%trenching depth from in to m
@@ -98,7 +88,9 @@ Changable parameters
     %exponential fit to NG data
     %Antenna is a vector with each index being the cost for the style of the 
     %same index
-    
+```
+## Total Cost
+```
     Total Cost
     cost = sum(antenna)+sum(transmitterC)+sum(concrete)+sum(receiverC)+trenching+misc_costs;
     % the total cost for the both the transmitting and receiving antenna
@@ -113,4 +105,5 @@ Changable parameters
     %interest/inflation, the interest variable can be changed to account for
     %bidding prices and escalation, this will calculate the estimated cost in
     %the the year of building
-end ```
+end 
+```
