@@ -71,10 +71,10 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
 
         % returns the parabolic array of one antenna of each style of the
         % radar array, returns an vector
-        G_r = k * (pi * (diameters ./ lambda)).^2;
+        gain_reciever = k * (pi * (diameters ./ lambda)).^2;
        
         % returns the gain of all of the antennas of each style of the array
-        array_gain_r = num_recievers .* G_r;
+        array_gain_r = num_recievers .* gain_reciever;
         total_gain_r=sum(array_gain_r);
         reciever_gain_dB = 10 * log10(total_gain_r);
     end
