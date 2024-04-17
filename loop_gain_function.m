@@ -74,8 +74,8 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
         gain_reciever = k * (pi * (diameters ./ lambda)).^2;
        
         % returns the gain of all of the antennas of each style of the array
-        array_gain_r = num_recievers .* gain_reciever;
-        total_gain_reciever=sum(array_gain_r);
+        array_gain_reciever = num_recievers .* gain_reciever;
+        total_gain_reciever=sum(array_gain_reciever);
         reciever_gain_dB = 10 * log10(total_gain_reciever);
     end
 
