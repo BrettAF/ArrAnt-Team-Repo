@@ -26,15 +26,15 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
     % EIRP of the array
     EIRP = gain_all_transmitters(k,num_transmitters,diameters,lambda,power_transmitters);
     
-    % MGr : total gain of the recievers in the array
-    MGr = gain_all_recievers(k,num_recievers,diameters,lambda);
+    % array_gain_recievers : total gain of the recievers in the array
+    array_gain_recievers = gain_all_recievers(k,num_recievers,diameters,lambda);
 
     % Loop Gain Equation
     % eirp_a = NPt * NGt;
-    % MGr = M * Gr
+    % array_gain_recievers = M * Gr
     % loop_gain = eirp of the array + array gain of recievers;
-    % loop_gain = EIRP + MGr
-    loop_gain = EIRP + MGr;
+    % loop_gain = EIRP + array_gain_recievers
+    loop_gain = EIRP + array_gain_recievers;
 
 
 
@@ -63,7 +63,7 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
         EIRP_A_dB = 10 * log10(total_gain_t);
     end
 
-    function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) %MGr
+    function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) %array_gain_recievers
         % Calculate total reciever gain for the array
         % This function calculates parabolic gain.
         % diameter: Diameter of the antennas, recieved as a vector
