@@ -59,8 +59,8 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
         
         array_gain_transmitter = num_transmitters.^2.*power.*gain_transmitter;
         %correct form
-        total_gain_t=sum(array_gain_transmitter);
-        EIRP_A_dB = 10 * log10(total_gain_t);
+        total_gain_transmitter=sum(array_gain_transmitter);
+        EIRP_A_dB = 10 * log10(total_gain_transmitter);
     end
 
     function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) %array_gain_recievers
