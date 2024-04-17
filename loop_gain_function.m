@@ -50,14 +50,14 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
 
         % returns the parabolic array of one antenna of each style of the
         % radar array, returns an vector
-        G_t = k * (pi * (diameters ./ lambda)).^2; 
+        gain_transmitter = k * (pi * (diameters ./ lambda)).^2; 
         
         % returns the sum gain of all of the antennas of each style of the array
         %array_gain_t = num_transmitters .* parabolic_gain;
         %^^^ I think the issue is here. EIRP of the transmit is
         %log10(N^2*P*G), for each individual style, then summed together
         
-        array_gain_t = num_transmitters.^2.*power.*G_t;
+        array_gain_t = num_transmitters.^2.*power.*gain_transmitter;
         %correct form
         total_gain_t=sum(array_gain_t);
         EIRP_A_dB = 10 * log10(total_gain_t);
