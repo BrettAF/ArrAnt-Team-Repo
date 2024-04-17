@@ -1,29 +1,30 @@
 # Constraints and Calling Objective Function
-The parameters for optimization are passed to the RadarOptimization function( on the script of the same name) They are then passed to the bounding function to create constraints for the x-matrix. The A-matrix is also created to achieve these constraints. The output of these and the objective function itself are passed to the gamultobj function to perform the optimization. To learn more about gamultobj, see the Gamultobj and its Hyperparameters documentation.
+Optimization constraints are needed in this program to set the upper and lower bounds of the parameters that will be used during the optimization. The user enters the parameter limits in the main script. These optimization parameters are then passed to the radar_optimization function to be used in the nested bounding function. The bounding function uses the parameters to create the constraints for the x-matrix and the A-matrix. The output of these matrices and the objective functions are passed to the gamultobj function to perform the optimization. (To learn more about gamultobj, see the "Gamultobj and its Hyperparameters" documentation)
 ## The Bounding Function
-The bounding function constrains the minimum and maximum for the four parameters which are:
+The bounding function constrains the minimum and maximum values for the four parameters:
 * Type
 * Quantity
 * Diameter
 * Power
  <br>
-Minimum quantity, maximum quantity, minimum diameter, maximum diameter minimum power, and maximum power are received as arguments to the function. They were originally entered on the main live script. They are used to create the upper and lower bounds for the population created in the genetic algorithm. Type is not entered on the main live script, but includes monostatic, minimum receiver styles, and minimum transmitter styles are. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type. <be>
+The minimum and maximum values for quantity, diameter, and power, entered in the main live script, are received as arguments to the bounding function. These min/max values are used to create the upper and lower bounds for the population created in the genetic algorithm. <be>
 
 lb: the upper bound vector contains all of the maximum values the array solutions are allowed to contain. 
 ub: the lower bound vector contains all of the minimum values the radar array solutions are allowed to have.  
 These two vectors are the length of the four parameters times the number of styles. 
 <br>
 > For example:  
-> If a radar array had 3 styles, lb would be a vector 12 indices long, as would ub.
+> If a radar array had 3 styles, lb and ub would be vectors with 12 indices.
 <br>
     
-For each style in both vectors, the indices pertaining to quantity, diameter, and power will be the same.
-Type represents whether a style is a transmitter, a receiver, or a monostatic. To learn more about styles see the Styles and Types documentation. How types are added to the vectors depends on whether include monostatic is true. if it is, the program will proceed with the following logic:
+*******The indices pertaining to quantity, diameter, and power will be the same, for each style, in both lb and ub vectors*****.
+Type is recorded differently the other parameters in the main live script. Type constraints are determined by the including_monostatic variable, and the min_r_styles (minimum receiver styles), and min_t_styles (minimum transmitter styles) variables. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type. Type represents whether a style is a transmitter, a receiver, or a monostatic antenna. To learn more about styles see the Styles and Types documentation. How types are added to the vectors depends on whether the include_monostatic variablei is true or false. 
+If allow_monostatic = "T", type uses the following rules:
 * Transmitters: 0 < t < 1
 * Monostatic:   1 < t < 2
 * Receivers:    2 < t < 3
 <br>
-if allow_monostatic = "F" then the type follows the following rules
+if allow_monostatic = "F",  type uses the following rules
 <br>
 
 * Transmitters: 0 < t < 1.5  
