@@ -17,8 +17,8 @@ These two vectors (lb and ub) are the length of the four parameters multiplied b
 > If a radar array had 3 styles, lb and ub would be vectors with 12 indices.
 <br>
     
-*******The indices pertaining to quantity, diameter, and power will be the same, for each style, in both lb and ub vectors*****.
-Type represents whether a style is a transmitter, a receiver, or a monostatic antenna. (To learn more about styles see the Styles and Types documentation). Type is recorded differently the other parameters in the main live script. Type constraints are determined by the including_monostatic variable, and the min_r_styles (minimum receiver styles), and min_t_styles (minimum transmitter styles) variables. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type.  How types are added to the vectors depends on whether the include_monostatic variable is true or false.  ****Minimum transmitter styles (min_t_styles) and minimum receiver styles (min_r_styles) allow the user control over the total amount of (transmitters) that the program will generate****. Minimum transmitter styles are controlled on the upper bound vector starting from the left and going to the right.  Receivers are controlled on the lower bound vector starting from the right and going to the left.\
+The indices pertaining to quantity, diameter, and power will be the same for each style. This holds true for both lb and ub. 
+Type represents whether a style is a transmitter, a receiver, or a monostatic antenna. (To learn more about styles see the Styles and Types documentation). Type is recorded differently the other parameters in the main live script. Type constraints are determined by the including_monostatic variable, and the min_r_styles (minimum receiver styles), and min_t_styles (minimum transmitter styles) variables. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type.  How types are added to the vectors depends on whether the include_monostatic variable is true or false.  Minimum transmitter styles (min_t_styles) and minimum receiver styles (min_r_styles) allow the user control over the total number of styles of transmitters and receivers that the program will generate. The number of styles that are receiver( or monostatic) will always be larger than min_r_styles. The same goes for transmitters and min_r_styles. Minimum transmitter styles are controlled on the upper bound vector (ub) starting from the left and going to the right.  Receivers are controlled on the lower bound vector (lb )starting from the right and going to the left.\
 
 If allow_monostatic = "F",  type uses the following rules
 * Transmitters: 0 < t < 1.5  
@@ -28,7 +28,7 @@ If allow_monostatic = "F",  type uses the following rules
 > If the num_styles = 3, and min_t_styles = 2:
 > The first two styles in each solution will be transmitters and the upper bound vector is set to 1.5 in the first two indices. <br>
 > transmitters = [1, 1, 0]
-> The last two styles in each solution will be recievers and the lower bound vector is set to 1.5 in the last two indices.   
+> The last two styles in each solution will be receivers and the lower bound vector is set to 1.5 in the last two indices.   
 > receivers = [0, 1, 1]
 
 If allow_monostatic = "T", type uses the following rules:
@@ -36,7 +36,7 @@ If allow_monostatic = "T", type uses the following rules:
 * Monostatic:   1 < t < 2
 * Receivers:    2 < t < 3
 
-Monostatic antennas are considered transmitters and receivers therefore the array of transmitter and receiver antennas indices can overlap. When there is overlap the result will be a monostatic antennas.
+Monostatic antennas are considered transmitters and receivers therefore the array of transmitter and receiver antennas indices can overlap. When there is overlap the result will be forced to be monostatic antennas.
 <br>   
 
 > For Example:
