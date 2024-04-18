@@ -15,4 +15,10 @@ The code takes the list of parameter values and the display table and saves them
 is the input iable of the input parameters from the main script. The second sheet is the display table of the optimal solutions.
      
 ## Calling the saveFile Function in Main Script
-A save function is called in the main script. The save function is called with the dot operator from the optimization output class in the script of the same name `output.saveFile(list, table)`.
+The save function is called in the main script with the dot operator for the optimization output class in the optimization output script. <br> <br>
+`disp_obj.output.saveFile(list, disp_table)`;<br> <br>
+disp_obj: an instance of the optimization_output class <br>
+.saveFile: the safeFile function in the class <br>
+(list, disp_table): the arguments to be sent to the saveFile function
+
+
