@@ -9,7 +9,7 @@ The bounding function constrains the minimum and maximum values for the four par
  <br>
 The minimum and maximum values for quantity, diameter, and power, that are entered in the main live script, are received as arguments to the bounding function. These min/max values are used to create the upper and lower bounds for the population that are created in the genetic algorithm. <br>
 
-lb: the upper bound vector contains all of the maximum values the array solutions are allowed to contain. 
+lb: the upper bound vector contains all of the maximum values the array solutions are allowed to contain. <br>
 ub: the lower bound vector contains all of the minimum values the radar array solutions are allowed to have.  
 These two vectors (lb and ub) are the length of the four parameters multiplied by the number of styles. 
 <br>
@@ -18,7 +18,7 @@ These two vectors (lb and ub) are the length of the four parameters multiplied b
 <br>
     
 The indices pertaining to quantity, diameter, and power will be the same for each style. This holds true for both lb and ub. 
-Type represents whether a style is a transmitter, a receiver, or a monostatic antenna. (To learn more about styles see the Styles and Types documentation). Type is recorded differently the other parameters in the main live script. Type constraints are determined by the including_monostatic variable, and the min_r_styles (minimum receiver styles), and min_t_styles (minimum transmitter styles) variables. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type.  How types are added to the vectors depends on whether the include_monostatic variable is true or false.  Minimum transmitter styles (min_t_styles) and minimum receiver styles (min_r_styles) allow the user control over the total number of styles of transmitters and receivers that the program will generate. The number of styles that are receiver( or monostatic) will always be larger than min_r_styles. The same goes for transmitters and min_r_styles. Minimum transmitter styles are controlled on the upper bound vector (ub) starting from the left and going to the right.  Receivers are controlled on the lower bound vector (lb )starting from the right and going to the left.\
+Type represents whether a style is a transmitter, a receiver, or a monostatic antenna. (To learn more about styles see the Styles and Types documentation). Type is recorded differently than the other parameters in the main live script. Type constraints are determined by the including_monostatic variable, and the min_r_styles (minimum receiver styles), and min_t_styles (minimum transmitter styles) variables. These two numbers and the boolean flag are used to create the upper bounds and lower bounds for type.  How types are added to the vectors depends on whether the include_monostatic variable is true or false.  Minimum transmitter styles (min_t_styles) and minimum receiver styles (min_r_styles) allow the user control over the total number of styles of transmitters and receivers that the program will generate. The number of styles that are receiver( or monostatic) will always be larger than min_r_styles. The same goes for transmitters and min_r_styles. Minimum transmitter styles are controlled on the upper bound vector (ub) starting from the left and going to the right.  Receivers are controlled on the lower bound vector (lb )starting from the right and going to the left.\
 
 If allow_monostatic = "F",  type uses the following rules
 * Transmitters: 0 < t < 1.5  
