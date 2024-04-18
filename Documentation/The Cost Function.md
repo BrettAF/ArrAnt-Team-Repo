@@ -1,30 +1,34 @@
 # The Cost Function
-The cost function used within this directory is a .m file used to calculate the total cost of a receiving and transmitting array, or a monostatic array. The total cost calculated using this function is then used as a parameter in radar_optimization.m to find points along the pareto front comparing total array cost and loop gain.
+The cost function used within this directory is a .m file used to calculate the total cost of a receiving, transmitting and/or a monostatic array. The total cost calculated using this function is then used as one of the parameters in radar_optimization.m to find optimal solutions points along the Pareto front.
 
-The function combines paremetric and analogous cost estimation techniques to estimate major components which then add to the total cost. These major components include the receivers, transmitters, the antennae, the concrete, and the trenching. Escalation is then applied to the summation of major component costs.
+The cost function combines paremetric and analogous cost estimation techniques to estimate major components which then added to create the total cost. These major components include the receivers, transmitters, the antennae, the concrete, and the trenching. Escalation is then applied to the summation of major component costs.
 
 ## Calling the Function
 While the function is designed to be unobtrusive, never being called on in the main live script, it is a working function called on by radar_optimization.m and can be called by other scripts or by the command window. 
 
-The inputs to the cost function are vectors and scalars. 
-* `Quantity` : vector input with each index indicating the number of antennae for a unique style
-* `Diameters` : vector input with each index indicating the antenna diameter in meters, with each index having the same style as 
-* `Powers` : vector input with every index indicating each individual antenna's transmitting power in Watts, with each index having the same style as  and diameter
-* `Receivers` and `transmitters` : logical input vectors, with every index has the same styles as quantity, diameter, and power. Values indicat the antenna type, with a 1 being true.
-* `yearBuilt` : scalar value indicating the expected construction date of the antenna array, which is then used to apply escalation
-For examples and distinction of style vs type, please see the Styles and Type documentation. The cost function output is a scalar quantity in US dollars.
+Inputs (vectors and scalars):
+* `Quantity` : vector input with each index indicating the number of antennae for each style
+* `Diameters` : vector input with each index indicating the antenna diameter in meters for each style
+* `Powers` : vector input with each index indicating each individual antenna's transmitting power in Watts, for each style
+* `Receivers` : logical input vectors, with every index containing values indicating the antenna type (1: receiver, 0: not a receiver).
+* `Transmitters` : logical input vectors, with every index containing values indicating the antenna type (1: transmitter, 0: not a transmitter).
+* `year_built` : scalar value indicating the expected construction date of the antenna array, which is then used to apply escalation
+(For examples and distinction of style vs type, please see the Styles and Type documentation.)
+
+Output:
+* `total_cost` : total cost calculation as a scalar quantity in US dollars.
 
 The cost function is called as:
 ```
-function [total_cost] = cost_function(quantity,diameters,powers,receivers,transmitters,yearBuilt)
+function [total_cost] = cost_function(quantity,diameters,powers,receivers,transmitters,year_built)
 
-%The cost_function outputs the total cost to build antenna arrays based
-%on the number, diameter, and power. This cost includes both the
+%The cost_function outputs the total cost to build antenna arrays based on the number, diameter, and power. This cost includes both the
 %transmitting and receiving arrays
 ```
 
 ## Changable Parameters
-The cost function was designed to have no hard coded parameters. Part of this design is the changable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters to a values to a more suitable value, these changable parameters are based on estimated values. These parameters are:
+The cost function was designed to have no hard coded parameters. Part of this design is the changable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters values as needed.  Changeable parameters are based on estimated values. <br>
+These parameters are:
 * `cost_per_receiver` : the individual cost, in US dollars, for each soild state receiver, with each receiver antenna having one receiver
 * `trenching_per_m3` : the estimated cost, in US dollars, to install a cubic meter of trenching. This value should be adjusted based on the intended terrain and required excavation tools
 * `trenching_depth` : the depth of the trenching in inches. This value should be adjusted based on the codes and standards particular to the area the antenna arrays will be built
@@ -46,7 +50,12 @@ interest = 1.5; % %interest, or %inflation
 ## Cost per Component
 After the changable parameters have been set, individual components of the arrays are calculated for cost. These function use both the changable parameters and curve fits to determine these values.
 ### Trenching
-The cost of trenching uses the [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) equation and the trenching_per_m3 to calculate the total cost of the trenching for the antenna arrays. First the trenching_per_m3 cost is used to calculate the cost to trench per meter based on the required depth and width of the trenching. The width and depth are converted from inches to meters then multiplied to the trenching_per_m3. By multiplying the cost to dig a cubic meter by the two dimensions we calculate the cost to dig trenching per meter, stored as trenching_per_m. The trenching_per_m is then used multiplied by the [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) equation. In this case n is the Quantity vector, summed to find the total number of antennas used in the arrays then divided by 3 to find the number of antenna per branch. A in this equation is the spacing_by_diameter parameter defined previously multiplied by the maximum diameter present within the arrays, found within the diameters vector. Once the cost per branch is calculated the cost is multiplied by 3 to account for the expected Y shape the arrays will take. The scalar cost, in US dollars, for the total trenching is stored in the total_trenching_cost variable.
+The cost of trenching uses the [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) equation and the trenching_per_m3 to calculate the total cost of the trenching for the antenna arrays. 
+1. The trenching_per_m3 cost is used to calculate the cost to trench per meter based on the required depth and width of the trenching. 2. The width and depth are converted from inches to meters then multiplied to the trenching_per_m3.
+3. By multiplying the cost to dig a cubic meter by the two dimensions we calculate the cost to dig trenching per meter, stored as trenching_per_m.
+4. The trenching_per_m is then used multiplied by the [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) equation. In this case n is the Quantity vector, summed to find the total number of antennas used in the arrays then divided by 3 to find the number of antenna per branch. A in this equation is the spacing_by_diameter parameter defined previously multiplied by the maximum diameter present within the arrays, found within the diameters vector.
+5. Once the cost per branch is calculated the cost is multiplied by 3 to account for the expected Y shape the arrays will take.
+6. The scalar cost, in US dollars, for the total trenching is stored in the total_trenching_cost variable.
 ```
 trenching_depth = trenching_depth*0.0254;%trenching depth from in to m
 trenching_width = trenching_width*0.0254;%trenching width from in to m
@@ -65,7 +74,7 @@ The transmitter function calculates the cost for the transmitters based on the q
 
 The data was used to create a linear curve fit, which had a R = 0.9934. The numerical values within the equation below are the result of the linear curve fit. The linear equation is a funciton of power, calculating the cost per transmitter using the powers vector, then multiplying that resultant vector by the quantity and the transmitters to calculate the total cost of the transmitters, transmitter_cost_per_style, with each index being a style. The powers is input as Watts, but the linear curve fit is in units of kW, so to prevent error the powers vector is divided by 1000 to convert from Watts to kW. Dot multiplication is used to ensure individual styles are not mixed. The transmitters vector is a logical vector indicating the antenna is either a transmitter or reciever so that the receivers are not included into the transmitters cost.
 
-If additional data is provided this equation, particularly the portion (0.0227*(powers/1000)+1.1523)*1E6, can be simply changed or updated based on the optimimal fit so long as power remains the independant variable.
+If additional data is provided, this equation, particularly the portion (0.0227*(powers/1000)+1.1523)*1E6, can be simply changed or updated based on the optimimal fit so long as power remains the independant variable.
 ```    
 transmitter_cost_per_style = quantity.*transmitters.*(0.0227*(powers/1000)+1.1523)*1E6; %$
 ```
@@ -76,7 +85,7 @@ The concrete function calculates the cost for the concrete pad based on the quan
 
 The data was used to create a quadratic curve fit. A linear curve fit had an R = 0.9913 while a quadratic curve fit had an R = 0.9983. This is likely due to additional rebar and gradual pour required for thicker pads. The numerical values within the equation below are the result of the quadratic curve fit. The quadratic equation is a function of antenna diameter, calculating the cost per antenna pad using the diameter vector, then multiplying that resultant vector by the quantity vector. The concrete_cost_per_style vector is a vector containing the total cost, in US dollars, for the concrete antenna pads, with each index representing a style. The Dot multiplication is used to ensure individual styles are not mixed.
 
-If additional data is provided this equation, particularly the portion (1E4*(0.0706* diameters.^2+2.2827*diameters-4.4419)), can be simply changed or updated based on the optimimal fit so long as diameters remains the independant variable.
+If additional data is provided, this equation, particularly the portion (1E4*(0.0706* diameters.^2+2.2827*diameters-4.4419)), can be simply changed or updated based on the optimimal fit so long as diameters remains the independant variable.
 ``` 
 concrete_cost_per_style = quantity.*(1E4*(0.0706*diameters.^2+2.2827*diameters-4.4419)); %$
 ```
@@ -92,12 +101,11 @@ If additional data is provided this equation, particularly the portion (254283*e
 antenna_cost_per_style = quantity.*(254283*exp(diameters.*0.1555)); %$
 ```
 ## Total Cost
-Once the cost of all major components have been calculated the total cost is simply the summation of the calculated component vectors as well as the calculated trenching scalar and the miscellaneous cost parameter. The sum of each vector is individually calculated first to ensure that no value is accidentally added multiple times. Summation for component cost is calculated here, not after each of the above equations for multiple reasons. When analyzing and calculating the cost of the arrays, individual styles are kept together as as the same index in the antenna_cost_per_style, transmitter_cost_per_style, concrete_cost_per_style, and receiver_cost_per_style vectors. This allows individual component costs based on diameter, power, and quantity to be kept with their same styles, allowing error calculation as well as modification to individual styles to see how the cost changes. AFter the sum of each vector is calculated the scalar total_trenching_cost and mis_costs are added to result in the variable cost, inn US dollars.
-Once the cost is calculated interest is applied. All the models used data from 2023, so to apply to future building projects the cost is adjusted. Interest is calculated using the compound interest formula. The total_cost is the total project cost for the antenna arrays in US dollars for the year in which the project is built.
+Once the cost of all major components have been calculated, the total cost is simply the summation of the calculated component vectors as well as the calculated trenching scalar and the miscellaneous cost parameter. The sum of each vector is individually calculated first to ensure that no value is accidentally added multiple times. Summation for component cost is calculated here, not after each of the above equations for multiple reasons. When analyzing and calculating the cost of the arrays, individual styles are kept together as as the same index in the antenna_cost_per_style, transmitter_cost_per_style, concrete_cost_per_style, and receiver_cost_per_style vectors. This allows individual component costs based on diameter, power, and quantity to be kept with their same styles, allowing error calculation as well as modification to individual styles to see how the cost changes. After the sum of each vector is calculated the scalar total_trenching_cost and misc_costs are added to result in the variable cost, in US dollars.
+Once the cost is calculated, interest is applied. All the models used data from 2023, so to accurately calculate future building projects, the cost is appropriately adjusted. Interest is calculated using the compound interest formula. The total_cost is the total project cost for the antenna arrays in US dollars for the year in which the project is built.
 ```
 unadjusted_cost = sum(antenna_cost_per_style)+sum(transmitter_cost_per_style)+sum(concrete_cost_per_style)+sum(receiver_cost_per_style)+total_trenching_cost+misc_costs;
 
 total_cost = unadjusted_cost*(1+interest/100)^(yearBuilt-2023);
 
-end 
 ```
