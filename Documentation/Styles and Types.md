@@ -9,6 +9,7 @@ A style is group of congruent radar arrays that share the same:
 - Diameter​
 - Power​
 ![Styles and types](https://github.com/BrettAF/ArrAnt-Team-Repo/blob/main/Documentation/images/example_StyleType.png)
+![Styles and types2](https://github.com/BrettAF/ArrAnt-Team-Repo/blob/main/Documentation/images/styles%20and%20types.JPG)
 > For example: <br>
 This array candidate has 3 styles and 2 types of antennaes. The 3 styles include 2 transmitter styles and 1 receiver style.
 > 
