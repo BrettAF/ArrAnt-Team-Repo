@@ -1,5 +1,9 @@
 # The MATLAB Main Script
-The main_live_script.mlx file is the MATLAB file in which the user enters all the inputs are receives all the output. The file is a live script, allowing the user to easily change the values of the input variables. There are several sections to the live script, the input parameters, the radar optimization, the optimization output table and graph, and the saving of inputs and outputs.
+The main_script.mlx file is the MATLAB file in which the user enters all the parameters, performs the optimization and  receives all output results. The file is a live script, allowing the user to easily change the values of the input variables. <br><br>
+There are three sections to the live script:
+- Input Parameters:
+- Run the Radar Optimization
+- Print and Save the Radar Optimization Output
 
 ## Input Parameters
 The live script allows for the user to have clear fields indicating where the user should insert the input and how that input can be changed. A view of the live input is shown in the image below.
@@ -75,15 +79,15 @@ A plain .m version of the live script code:
  include_monostatic = "F"; % change to a T to include monostatic antennas, change to a F to exclude monostatic antennas
 ```
 
-## Radar Optimization
-![Radar Optimization](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/4575233e-02da-4cc2-81e1-6bf1efabc782)
+## Run the Radar Optimization
+```MATLAB
+[x, operative_values] = radar_optimization(num_styles,min_t_styles,min_r_styles,min_quantity,max_quantity,min_diameter,max_diameter,min_power,max_power,year_built,include_monostatic,k,nu,max_antennas);
+```
+This code calls the radar_optimization script using the input parameters. It returns the x matrix and the operative_values (cost and gain)
 
-## Optimization Output
-### Table
-![Output Table](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/a7c872a9-b6f6-4354-84fc-f053fbd5de20)
 
-### Graph
-![Output Graph](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/09eca913-e9a2-4414-a8d3-14a43fcdbe8c)
-
-## Save File as .xlsx
-In this section of the live script, the obj_disp.saveFile is used to create a Excel file saved to the same directory in which the live script is located. The Excel file is named in the format of arraySolutions_Year_Month_Day_Hour_Min_Sec. The first sheet of the Excel file contains all the input varaible from the live script. The second shett contains all the outputs from the radar optimization, including:
+## Print and Save the Radar Optimization Output
+```MATLAB
+optimization_output(x,num_styles,operative_values, include_monostatic,loop_gain_desired, min_t_styles,min_r_styles,min_quantity,max_quantity,min_diameter,max_diameter,min_power,max_power,year_built,k,nu,max_antennas)
+```
+This code calls the optimization_output script to display a table of optimal solutions, a scatterplot and save the input parameters and output table as a .xlsx file. The .xlsx file is saved in the current directly. More info on the create_table function, the create_graph function and the saveFile function can be found in its own documentation section.
