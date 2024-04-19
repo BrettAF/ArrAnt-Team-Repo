@@ -20,4 +20,18 @@ Gamultiobj uses a controlled, elitist genetic algorithm based on a variant of NS
 For more information about gamultobj see [Matlab, gamultobj()](https://www.mathworks.com/help/gads/gamultiobj.html)
 
 ## Hyperparameters
+There are 3 parameters used in the gamultiobj function: FunctionTolerance, PopulationSize and MaxGenerations. They are entered as options in the beginning of the radar_optimization script so that they can be easy to find.
+```MATLAB
+options = optimoptions('gamultiobj', 'FunctionTolerance',1e-4,'PopulationSize', 400, 'MaxGenerations', 150);
+```
+- Function Tolerance: sets the tolerance on the fitness function, and it serves as one of the stopping criteria for the optimization process.
+- Population Size: refers to how many candidates are in each generation.
+- MaxGenerations: sets the number of iterations the optimization will run.
+### Sensivity Analysis of Hyperparameters
+A sensitity analysis was done to determine the optimal settings for these hyperparameters. 
+
+This analysis concluded that the optimal values are:
+- Function Tolerance: 1e-4
+- Population Size: 400
+- MaxGenerations: 150
 
