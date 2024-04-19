@@ -28,10 +28,12 @@ options = optimoptions('gamultiobj', 'FunctionTolerance',1e-4,'PopulationSize', 
 - Population Size: refers to how many candidates are in each generation.
 - MaxGenerations: sets the number of iterations the optimization will run.
 ### Sensivity Analysis of Hyperparameters
-A sensitity analysis was done to determine the optimal settings for these hyperparameters. 
+A sensitity analysis was done to determine the optimal settings for these hyperparameters. <br>
+![Hyper-Parameters](https://github.com/BrettAF/ArrAnt-Team-Repo/blob/main/Documentation/images/SensitivityHyperP.png)
 
 This analysis concluded that the optimal values are:
 - Function Tolerance: 1e-4
 - Population Size: 400
 - MaxGenerations: 150
 
+because they gave the most number of solutions withing a 10% range of the desired loop gain of 200 dB/DBW for a reasonable amount of time. 
