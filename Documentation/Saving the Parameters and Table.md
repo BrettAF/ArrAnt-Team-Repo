@@ -1,24 +1,33 @@
 # Saving the file
 
-## The saveFile function 
-Arguments: <br />
-list_parameters, disp_table
+## Description
+The saveFile function is nested in the optimization_output script and used to save the input parameters and the output table to an .xlsx file.
 
-Variables:<br />
-labels_parameters = list of the label names <br />
-dict_parameters = table of labels and values of parameters<br />
-current_time = accessing the current date and time in string format<br />
-filename = creating the file name to be saved
+## Usage
+```MATLAB
+function saveFile(disp_table)
+```
+
+## Inputs
+`disp_table`: Table of optimal solutions
+
+## Outputs
+no variable outputs
+
+## Explainging of Code
+1. Create columns for the input sheet
+   - `list_parameter_names`: list of the names of the input parameters
+   - `list_parameters`: list of the values of the input parameters
+   - `list_parameter_units`: list of the units of the input parameters
+2. Create the parameter table
+3. Create the filename using the current time
+4. Write the parameter table and the display table to the excel file
 
 
-The code takes the list of parameter values and the display table and saves them to 2 excel spreadsheets. The first sheet
-is the input iable of the input parameters from the main script. The second sheet is the display table of the optimal solutions.
+
+
+
      
-## Calling the saveFile Function in Main Script
-The save function is called in the main script with the dot operator for the optimization output class in the optimization output script. <br> <br>
-`disp_obj.output.saveFile(list, disp_table)`;<br> <br>
-disp_obj: an instance of the optimization_output class <br>
-.saveFile: the safeFile function in the class <br>
-(list, disp_table): the arguments to be sent to the saveFile function
+
 
 
