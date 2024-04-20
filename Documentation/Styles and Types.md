@@ -1,4 +1,4 @@
-# Styles and types
+# Styles and Types
 The purpose of this documentation is to explain the use of the terms styles and types in the program.
 
 ## Styles
