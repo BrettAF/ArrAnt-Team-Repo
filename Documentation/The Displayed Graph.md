@@ -18,7 +18,7 @@ function create_graph(disp_table,loop_gain_desired)
 ## Explanation of Code
 1. Use the desired loop gain argument to create the horizontal gain constraint lines
 2. Create the graph.
-3. Add interative clicking on points to gain more info
+3. Add interactive clicking on points to gain more info
    
 ## Nested customDataTip Function
 This function uses the position of the mouse click to display info to the create_graph function
