@@ -4,7 +4,7 @@ The purpose of this documentation is to explain the use of the terms styles and 
 ## Styles
 A style is group of congruent radar arrays that share the same:
 
-- Type of Antennae
+- Type of Antenna
 - Quantity​
 - Diameter​
 - Power​
