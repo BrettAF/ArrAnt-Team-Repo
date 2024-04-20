@@ -30,9 +30,9 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
     array_gain_reciever = gain_all_recievers(k,num_recievers,diameters,lambda);
 
     % Loop Gain Equation
-    % eirp_a = NPt * NGt;
-    % array_gain_reciever = M * Gr
-    % loop_gain = eirp of the array + array gain of recievers;
+    % EIRP of the array = (number of transmitters)(power of transmitters) * (number of trnamsitters)(gain of transmitters)
+    % array_gain_reciever = number of recievers * gain of recievers
+    % loop_gain = eirp of the array + gain of recievers;
     % loop_gain = EIRP + array_gain_reciever
     loop_gain = EIRP + array_gain_reciever;
 
@@ -44,8 +44,7 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
         % 
         % diameter: Diameter of the antennas, recieved as a vector
         % lambda: Wavelength of the signal
-        % power: power to the arrays in watts, an array with 0 for
-        %   recievers
+        % power: power to the arrays in watts, an array with 0 for recievers
         % k: effencency of the arrays
 
         % returns the parabolic array of one antenna of each style of the
@@ -54,16 +53,13 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
         
         % returns the sum gain of all of the antennas of each style of the array
         %array_gain_transmitter = num_transmitters .* parabolic_gain;
-        %^^^ I think the issue is here. EIRP of the transmit is
-        %log10(N^2*P*G), for each individual style, then summed together
         
         array_gain_transmitter = num_transmitters.^2.*power.*gain_transmitter;
-        %correct form
         total_gain_transmitter=sum(array_gain_transmitter);
         eirp_array_dB = 10 * log10(total_gain_transmitter);
     end
 
-    function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) %array_gain_reciever
+    function reciever_gain_dB = gain_all_recievers(k,num_recievers,diameters,lambda) 
         % Calculate total reciever gain for the array
         % This function calculates parabolic gain.
         % diameter: Diameter of the antennas, recieved as a vector
