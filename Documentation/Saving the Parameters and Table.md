@@ -14,7 +14,7 @@ function saveFile(disp_table)
 ## Outputs
 no variable outputs
 
-## Explainging of Code
+## Explaining the Code
 1. Create columns for the input sheet
    - `list_parameter_names`: list of the names of the input parameters
    - `list_parameters`: list of the values of the input parameters
