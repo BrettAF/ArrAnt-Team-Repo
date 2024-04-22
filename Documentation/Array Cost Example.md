@@ -18,7 +18,7 @@ To explain and demonstrate the function of the cost function, here is an example
 * `transmitters`: [1, 0] (boolean vector, 1 for transmitter, 0 for receiver)
   * Style 1: The antennae for style 1 are transmitter antenna and have transmitters
   * Style 2: The antennae for style 2 are not transmitter antenna and do not have transmitters
-* `yearBuilt`: 2027
+* `year_built`: 2027
   * the year in which the antenna array will begin construction is 2027
 
 ## Calculating Trenching Cost
