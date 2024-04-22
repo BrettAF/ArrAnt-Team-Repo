@@ -26,7 +26,7 @@ function loop_gain = loop_gain_function(quantity,diameters,power,receivers,trans
 This function calculates the total gain of all transmitters in the array.
 
 ```matlab
-function EIRP_A_dB = gain_all_transmitters(k,num_transmitters,diameters,lambda,power)
+function eirp_array_dB = gain_all_transmitters(k,num_transmitters,diameters,lambda,power)
 ```
 
 #### Inputs
@@ -37,7 +37,7 @@ function EIRP_A_dB = gain_all_transmitters(k,num_transmitters,diameters,lambda,p
 - `power`: Power to the arrays in watts, with 0 for receivers.
 
 #### Output
-- `EIRP_A_dB`: The total EIRP (Effective Isotropic Radiated Power) of all transmitters in dB, found using both the power of the transmitters and gain of the transmitters in the array.
+- `eirp_array_dB`: The total EIRP (Effective Isotropic Radiated Power) of all transmitters in dB, found using both the power of the transmitters and gain of the transmitters in the array.
 
 ### `gain_all_recievers`
 This function calculates the total gain of all receivers in the array.
