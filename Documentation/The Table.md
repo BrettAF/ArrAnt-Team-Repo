@@ -1,6 +1,6 @@
 # The Table of Solutions
 
-## Decription
+## Description
 The create table function is nested in the optimization_output script and used to create a table of the optimal solutions in the main script. It is also saved as the second sheet, called "Output Table" in a .xlxs file.
 
 ## Usage
