@@ -3,21 +3,21 @@ To explain and demonstrate the function of the cost function, here is an example
 
 ## Inputs
 * `quantity`: [2, 3] (quantity of each antenna style)
-  * Style 1: 2 antennae within the arrays
-  * Style 2: 3 antennae within the arrays
+  * Style 1: 2 antenna within the arrays
+  * Style 2: 3 antenna within the arrays
 * `diameters`: [30, 40] (diameters of each antenna style in m)
-  * Style 1: The antennae for style 1 both have diameters of 30 meters
-  * Style 2: The antennae for style 2 all have diameters of 40 meters
+  * Style 1: The antenna for style 1 both have diameters of 30 meters
+  * Style 2: The antenna for style 2 all have diameters of 40 meters
 * `powers`: [1000, 9000] (transmitter power in watts of each antenna style)
-  * Style 1: The antennae for style 1 both have a transmitter power of 1000 Watts
-  * Style 2: The antennae for style 2 all have a transmitter power of 9000 Watts
+  * Style 1: The antenna for style 1 both have a transmitter power of 1000 Watts
+  * Style 2: The antenna for style 2 all have a transmitter power of 9000 Watts
     * If you look at the transmitter vector you will see Style 2 are receiving antennae and have no transmitters. This value input here will help demonstrate how the function accounts for the separation of transmitting and receiving antenna.
-* `receivers`: [0, 1] (boolean vector, 0 for transmitter, 1 for receiver)
-  * Style 1: The antennae for style 1 are not receiver antenna and have no receivers
-  * Style 2: The antennae for style 2 are receiver antenna and have receivers
-* `transmitters`: [1, 0] (boolean vector, 1 for transmitter, 0 for receiver)
-  * Style 1: The antennae for style 1 are transmitter antenna and have transmitters
-  * Style 2: The antennae for style 2 are not transmitter antenna and do not have transmitters
+* `receivers`: [0, 1] (Boolean vector, 0 for transmitter, 1 for receiver)
+  * Style 1: The antenna for style 1 are not receiver antenna and have no receivers
+  * Style 2: The antenna for style 2 are receiver antenna and have receivers
+* `transmitters`: [1, 0] (Boolean vector, 1 for transmitter, 0 for receiver)
+  * Style 1: The antenna for style 1 are transmitter antenna and have transmitters
+  * Style 2: The antenna for style 2 are not transmitter antenna and do not have transmitters
 * `year_built`: 2027
   * the year in which the antenna array will begin construction is 2027
 
@@ -37,7 +37,7 @@ There are numerous variables for trenching which can be changed based on the ter
     trenching_scale = 1;
     %the trenching scale is a unitless value indicating how long and arduous
     %excavations will be based on the soil type and rock hardness/size
-Using these values the size of the trenching (with the lenght equal to 1 meter) is calculated. First the width and depth are converted into meters, then the cost to install trenching per meter cubed is multipled to the size of the trench in order to calculate the cost to install trenching per meter in length.
+Using these values the size of the trenching (with the length equal to 1 meter) is calculated. First the width and depth are converted into meters, then the cost to install trenching per meter cubed is multiplied to the size of the trench in order to calculate the cost to install trenching per meter in length.
 
 $depth_{m} = depth_{in}* 0.0254$<br />
 $depth_{m} = 44* 0.0254$<br />
@@ -57,7 +57,7 @@ $trenching = 1* 34.06448 * \frac{(\frac{\sum(2+3)}{3})^{1.6}}{0.000082* 40*1000)
 trenching = $ 759.0228696738
 
 ## Calculating Receivers Cost
-There is a variable for receiver cost which can be changed based on the kind of recievers the arrays will be using. This variable is not an input in the function handle but within the code located at the top. For this example the default value is used.
+There is a variable for receiver cost which can be changed based on the kind of receivers the arrays will be using. This variable is not an input in the function handle but within the code located at the top. For this example the default value is used.
 
     cost_per_receiver = 400000; %$
     %this is the cost ($) per reciever for each antenna as estimated by NG
