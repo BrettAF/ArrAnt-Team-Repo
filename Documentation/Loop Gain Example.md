@@ -4,8 +4,8 @@
 - `number`: [2, 3] (quantity of each antenna type)
 - `diameters`: [30, 40] (diameters of each antenna type in m)
 - `power`: [1000, 9000] (transmitter power in watts)
-- `receivers`: [0, 1] (boolean vector, 0 for transmitter, 1 for receiver)
-- `transmitters`: [1, 0] (boolean vector, 1 for transmitter, 0 for receiver)
+- `receivers`: [0, 1] (Boolean vector, 0 for transmitter, 1 for receiver)
+- `transmitters`: [1, 0] (Boolean vector, 1 for transmitter, 0 for receiver)
 - `k`: 0.6 (antenna efficiency)
 - `lambda`: 0.1 (wavelength in m)
 
