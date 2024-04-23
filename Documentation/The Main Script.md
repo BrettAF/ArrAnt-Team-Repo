@@ -10,11 +10,11 @@ The live script allows for the user to have clear fields indicating where the us
 
 ![Live Inputs](https://github.com/BrettAF/ArrAnt-Team-Repo/assets/166050829/7be6d7e7-70c1-431a-98ce-229830bc958b)
 
-* `k` is the expected efficiency of the antennae used within the arrays. The value is a double with a default value of 0.6. This value, being the effiency, should to any value between 0 and 1. This value is used within the loop gain function.
+* `k` is the expected efficiency of the antennae used within the arrays. The value is a double with a default value of 0.6. This value, being the efficiency, should to any value between 0 and 1. This value is used within the loop gain function.
   * Do not set the expected efficiency above 1. The code will still run, but it won't be able to produce any viable results. Ensure that the input value is between 0 and 1 for the code to operate correctly.
 * `nu` is the operating frequency of the transmitting and receiving antennae in GHz. This input is a double with a default value of 3 GHz, corresponding to a 10 cm wavelength. The code converts the frequency to wavelength within the radar optimization function.
-  * Do not enter the wavelength, as the radar optimization converts the frequency to wavelength. Entering the wavelenght will produce results for the incorrect wavelength. Ensure that the input is the frequency.
-  * Do not enter the wavelength in a value other than GHz. The radar optimization converts the frequency in GHz to Hz to calculate the required wavelenght. Ensure that the input frequency is converted into GHz. 
+  * Do not enter the wavelength, as the radar optimization converts the frequency to wavelength. Entering the wavelength will produce results for the incorrect wavelength. Ensure that the input is the frequency.
+  * Do not enter the wavelength in a value other than GHz. The radar optimization converts the frequency in GHz to Hz to calculate the required wavelength. Ensure that the input frequency is converted into GHz. 
 * `num_styles` is the number of different distinct styles the radar optimization will use in order to calculate point along the Pareto front. The value has a default value of 3, but can be input with any natural number within the range of 1 to 20. You can manually input the value or hit the adjacent arrow keys to change this value.
   * Do not change this value to 1 without also changing `include_monostatic` to true. Attempting this will result in error, as the loop gain function requires both a transmitting antenna and a receiving antenna at minimum to be present. There will be no results displayed.
 * `min_r_styles` is the minimum number of distinct receiver styles which should be used within the radar optimization. The value has a default value of 1 but can be input with any natural number between 1 and 20. You can manually input the value or hit the adjacent arrow keys to change this value.
@@ -45,12 +45,12 @@ The live script allows for the user to have clear fields indicating where the us
 * `loop_gain_desired` is the loop gain desired by the solution. This input is a double with a default of 200. This value is in dB.
   * Do not enter this value in as dBm, this will result in incorrect solutions.
   * Do not enter a negative number, there will be no solutions within this desired range.
-* `yearBuilt` is the year in which the construction is expected to begin for the chosen solution. This year should be in the Gregorian calendar.
-  * Do not use years based on other calendars. The cost function uses the year to apply escalation, so inputing an incorrect year will result in incorrect cost values.
+* `year_built` is the year in which the construction is expected to begin for the chosen solution. This year should be in the Gregorian calendar.
+  * Do not use years based on other calendars. The cost function uses the year to apply escalation, so inputting an incorrect year will result in incorrect cost values.
 * `include_monostatic` is a dropdown tool allowing the user to determine whether the solution should include monostatic arrays or not. The default selection "False" will prevent monostatic arrays from being included in the Pareto front. "True" allows monostatic arrays to be included. To change the selection click on the text, which will then produce a dropdown of the two options. Click on the desired selection.
   * Do not change `num_styles` to 1 without also changing `include_monostatic` to true. Attempting this will result in error, as the loop gain function requires both a transmitting antenna and a receiving antenna at minimum to be present. There will be no results displayed.
 
-In order to change the input variables to their default values, right click on the control then select "Restore Default Value". If the user desires to expand solutions beyond current bounds, first deterimine the desired controls that need to be changed. Individually right click each control, then select "Configure Control". Once the control menu is visible, change the minimum, maximum, and default values to the desired values.
+In order to change the input variables to their default values, right click on the control then select "Restore Default Value". If the user desires to expand solutions beyond current bounds, first deterimines the desired controls that need to be changed. Individually right click each control, then select "Configure Control". Once the control menu is visible, change the minimum, maximum, and default values to the desired values.
 
 A plain .m version of the live script code:
 ```
