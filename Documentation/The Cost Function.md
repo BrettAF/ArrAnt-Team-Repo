@@ -29,7 +29,7 @@ function [total_cost] = cost_function(quantity,diameters,powers,receivers,transm
 ## Changable Parameters
 The cost function was designed to have no hard coded parameters. Part of this design is the changable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters values as needed.  Changeable parameters are based on estimated values. <br>
 These parameters are:
-* `cost_per_receiver` : the individual cost, in US dollars, for each soild state receiver, with each receiver antenna having one receiver
+* `cost_per_receiver` : the individual cost, in US dollars, for each cryogenically cooled receiver, with each receiver antenna having one receiver
 * `trenching_per_m3` : the estimated cost, in US dollars, to install a cubic meter of trenching. This value should be adjusted based on the intended terrain and required excavation tools
 * `trenching_depth` : the depth of the trenching in inches. This value should be adjusted based on the codes and standards particular to the area the antenna arrays will be built
 * `trenching_width` : the width of the trenching in inches. This value should be based on codes, standards, and safety requirements
