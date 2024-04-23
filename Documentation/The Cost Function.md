@@ -26,8 +26,8 @@ function [total_cost] = cost_function(quantity,diameters,powers,receivers,transm
 %transmitting and receiving arrays
 ```
 
-## Changable Parameters
-The cost function was designed to have no hard coded parameters. Part of this design is the changable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters values as needed.  Changeable parameters are based on estimated values. <br>
+## Changeable Parameters
+The cost function was designed to have no hard coded parameters. Part of this design is the changeable parameters positioned immediately after the function. The parameters are positioned here in order for a user to open the funtions .m file and change the parameters values as needed.  Changeable parameters are based on estimated values. <br>
 These parameters are:
 * `cost_per_receiver` : the individual cost, in US dollars, for each cryogenically cooled receiver, with each receiver antenna having one receiver
 * `trenching_per_m3` : the estimated cost, in US dollars, to install a cubic meter of trenching. This value should be adjusted based on the intended terrain and required excavation tools
@@ -48,7 +48,7 @@ misc_costs = 0; %$
 interest = 1.5; % %interest, or %inflation
 ```
 ## Cost per Component
-After the changable parameters have been set, individual components of the arrays are calculated for cost. These function use both the changable parameters and curve fits to determine these values.
+After the changeable parameters have been set, individual components of the arrays are calculated for cost. These function use both the changeable parameters and curve fits to determine these values.
 ### Trenching
 The cost of trenching uses the [n^1.6 = A*r](https://ieeexplore.ieee.org/abstract/document/1140131) equation and the trenching_per_m3 to calculate the total cost of the trenching for the antenna arrays. The trenching_per_m3 cost is used to calculate the cost to trench per meter based on the required depth and width of the trenching.
 1. The width and depth are converted from inches to meters then multiplied to the trenching_per_m3.
@@ -74,7 +74,7 @@ The transmitter function calculates the cost for the transmitters based on the q
 
 The data was used to create a linear curve fit, which had a R = 0.9934. The numerical values within the equation below are the result of the linear curve fit. The linear equation is a funciton of power in kilowatts. The cost per transmitter is calculated using the powers vector within the linear equation, then multiplying that resultant vector by the quantity and the transmitter vectors to calculate the total cost of the transmitters, transmitter_cost_per_style, with each index being a style. The powers is input as Watts, but the linear curve fit is in units of kW, so to prevent error the powers vector is divided by 1000 to convert from Watts to kW. Dot multiplication is used to ensure individual styles are not mixed. The transmitters vector is a logical vector indicating the antenna is either a transmitter or reciever so that the receivers are not included into the transmitters cost.
 
-If additional data is provided, this equation, particularly the portion (0.0227*(powers/1000)+1.1523)*1E6, can be simply changed or updated based on the optimimal fit so long as power remains the independant variable.
+If additional data is provided, this equation, particularly the portion (0.0227*(powers/1000)+1.1523)*1E6, can be simply changed or updated based on the optimimal fit so long as power remains the independent variable.
 ```    
 transmitter_cost_per_style = quantity.*transmitters.*(0.0227*(powers/1000)+1.1523)*1E6; %$
 ```
