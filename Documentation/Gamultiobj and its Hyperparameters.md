@@ -15,9 +15,9 @@ For more information about genetic algorithms, visit [Geeks for Geeks, Genetic A
 
 ### Multi-objective values and pareto fronts
 A Pareto front is a set of points that have points that have no superior values on both objectives.
-### Gamultobj() 
+### Gamultiobj() 
 Gamultiobj uses a controlled, elitist genetic algorithm based on a variant of NSGA-II. This function ranks its population primarily by their distance from the pareto front and secondarily by their distance from each other. This incentivizes answers which are not only close to the pareto front but also spread along it.  
-For more information about gamultobj see [Matlab, gamultobj()](https://www.mathworks.com/help/gads/gamultiobj.html)
+For more information about gamultiobj see [Matlab, gamultobj()](https://www.mathworks.com/help/gads/gamultiobj.html)
 
 ## Hyperparameters
 There are 3 parameters used in the gamultiobj function: FunctionTolerance, PopulationSize and MaxGenerations. They are entered as options in the beginning of the radar_optimization script so that they can be easy to find.
@@ -27,8 +27,8 @@ options = optimoptions('gamultiobj', 'FunctionTolerance',1e-4,'PopulationSize', 
 - Function Tolerance: sets the tolerance on the fitness function, and it serves as one of the stopping criteria for the optimization process.
 - Population Size: refers to how many candidates are in each generation.
 - MaxGenerations: sets the number of iterations the optimization will run.
-### Sensivity Analysis of Hyperparameters
-A sensitity analysis was done to determine the optimal settings for these hyperparameters. <br>
+### Sensitivity Analysis of Hyperparameters
+A sensitivity analysis was done to determine the optimal settings for these hyperparameters. <br>
 ![Hyper-Parameters](https://github.com/BrettAF/ArrAnt-Team-Repo/blob/main/Documentation/images/SensitivityHyperP.png)
 
 This analysis concluded that the optimal values are:
