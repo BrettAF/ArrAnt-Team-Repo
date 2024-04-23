@@ -56,3 +56,5 @@ function receiver_gain_dB = gain_all_receivers(k,num_receivers,diameters,lambda)
 - `receiver_gain_dB`: The total gain of all receivers in dB.
 ```
 
+
+
